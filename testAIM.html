@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script type="text/javascript" src="src/models/ResultCollections.js"></script>
+    <script type="text/javascript" src="src/models/ResultClasses.js"></script>
+    <script type="text/javascript" src="src/models/ReadyToUse.js"></script>
+    <script type="text/javascript" src="src/models/Aim.js"></script>
+  </head>
+  <body>
+
+
+    <div class="container">
+  <form>
+    <div class="form-group row">
+      <label for="user" class="col-sm-2 col-form-label">User</label>
+      <div class="col-sm-10">
+        <input type="email" class="form-control" id="user" placeholder="user" value="test">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="equip" class="col-sm-2 col-form-label">Equip</label>
+      <div class="col-sm-10">
+        <input type="string" class="form-control" id="equip" placeholder="Equipment" value="GE MEDICAL SYSTEMS">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="equip" class="col-sm-2 col-form-label">Person</label>
+      <div class="col-sm-10">
+        <input type="string" class="form-control" id="person" placeholder="Person" value="PATIENT-12323">
+      </div>
+      <label for="equip" class="col-sm-2 col-form-label">Person Id</label>
+      <div class="col-sm-10">
+        <input type="string" class="form-control" id="personid" placeholder="Personid" value="12323">
+      </div>
+      <label for="equip" class="col-sm-2 col-form-label">Person birthdate</label>
+      <div class="col-sm-10">
+        <input type="string" class="form-control" id="dob" placeholder="DOB" value="12/12/1975">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="offset-sm-2 col-sm-10">
+        <button type="submit" class="btn btn-primary" onclick="generateAIM()">Generate AIM</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function generateAIM() {
+            var aim = {};
+            var user = {
+                name: {
+                    value: "admin"
+                },
+                roleInTrial: "",
+                loginName: {
+                    value: "admin"
+                }
+            };
+
+            var equipment = {
+                softwareVersion: {
+                    value: "gmp_vct_2.6"
+                },
+                manufacturerName: {
+                    value: "GE MEDICAL SYSTEMS"
+                },
+                manufacturerModelName: {
+                    value: ""
+                }
+            };
+
+            var person = {
+                id: {
+                    value: "1232323"
+                },
+                sex: {
+                    value: "M"
+                },
+                ethnicGroup: "",
+                name: {
+                    value: "CS-1-663434"
+                },
+                birthDate: {
+                    value: 19571031000000
+                }
+            };
+            aim = {ImageAnnotationCollection: {}};
+            aim["ImageAnnotationCollection"].user = user;
+
+
+            aim["ImageAnnotationCollection"].equipment =  equipment;
+            aim["ImageAnnotationCollection"].person = person;
+            aim["ImageAnnotationCollection"].imageAnnotations = {};
+
+
+            var equip = document.getElementById('equip').value;
+
+            
+            var calculationEntity = {};
+            calculationEntity["description"] ={value: 'Length'};
+            calculationEntity["uniqueIdentifier"] = {root: 0};
+            calculationEntity["typeCode"] ={
+                codeSystemName: "SRT",
+                code: "G-D7FE",
+                'iso:displayName': {
+                        value: "Length",
+                        'xmlns:iso': "uri:iso.org:21090"
+                    }
+            };
+            calculationEntity["mathML"] = ""
+            var calculationEntityCollection = {
+                CalculationEntity: calculationEntity
+            };
+
+            var ImageAnnotation = {calculationEntityCollection: calculationEntityCollection};
+            var calculationResultCollection = {CalculationResult: {}};
+            calculationResultCollection.CalculationResult.dataType = {
+                codeSystemName: "99EPAD",
+                code: "99EPADD1",
+                "iso:displayName": {
+                    value: "Double",
+                    "xmlns:iso": "uri:iso.org:21090"
+                }
+            };
+
+            calculationResultCollection.CalculationResult.dimensionCollection = {
+                Dimension: {
+                    index: {
+                        value: 0
+                    },
+                    label: {
+                        value: "LineLength"
+                    },
+                    size: {
+                        value: 1
+                    }
+                }
+            };
+            calculationResultCollection.CalculationResult["xsi:type"] = "ExtendedCalculationResult";
+            calculationResultCollection.CalculationResult.unitOfMeasure = {
+                value: "linear"
+            };
+            calculationResultCollection.CalculationResult.type = "Scalar";
+            calculationResultCollection.CalculationResult.calculationDataCollection = {CalculationData: {}};
+            calculationResultCollection.CalculationResult.calculationDataCollection.CalculationData.coordinateCollection = {
+                Coordinate: {
+                    position: {
+                        value: 0
+                    },
+                    dimensionIndex: {
+                        value: 0
+                    }
+                }
+            };
+            calculationResultCollection.CalculationResult.calculationDataCollection.CalculationData.value = { // line length
+                value: 7.343434
+            }
+            ImageAnnotation.calculationEntityCollection.CalculationEntity.calculationResultCollection = calculationResultCollection;
+            ImageAnnotation.calculationEntityCollection.CalculationEntity.algorithm = {
+                name: {
+                    value: "LineLength"
+                },
+                type: {
+                    codeSystemName: "99EPAD",
+                    code: "99EPADA1",
+                    "iso:displayName": {
+                        value: "Calculation",
+                        "xmlns:iso": "uri:iso.org:21090"
+                    }
+                },
+                version: {
+                    value: 1
+                }
+            };
+            ImageAnnotation.name = { value: "Lesion Test1" };
+            ImageAnnotation.dateTime = {
+                value: "08.17.2016T05:59:23PM.Zone:GMT"
+            };
+            ImageAnnotation.uniqueIdentifier = {
+                root: "3345217838.7.52.604.857283036.42064.6683563.27366450.1290.866177"
+            };
+            ImageAnnotation.typecode = {
+                codeSystemName: "ROI Only",
+                code: "ROI",
+                "iso:displayName": {
+                    value: "ROI Only",
+                    "xmlns:iso": "uri:iso.org:21090"
+                }
+            };
+            ImageAnnotation.comment = {
+                value: "CT / 2.5MM LIVER DELAYS / 0"
+            }
+            ImageAnnotation.markupEntityCollection = {MarkupEntity: {}};
+            ImageAnnotation.markupEntityCollection.MarkupEntity.lineOpactiy = "";
+            ImageAnnotation.markupEntityCollection.MarkupEntity.lineColor = "";
+            ImageAnnotation.markupEntityCollection.MarkupEntity.includeFlag = {
+                value: true
+            };
+            ImageAnnotation.markupEntityCollection.MarkupEntity.lineStyle = "";
+            ImageAnnotation.markupEntityCollection.MarkupEntity.lineThickness = "";
+            ImageAnnotation.markupEntityCollection.MarkupEntity["xsi:type"] = "TwoDimensionalMultiPoint";
+            ImageAnnotation.markupEntityCollection.MarkupEntity.shapeIdentifier = { value : 1};
+            ImageAnnotation.markupEntityCollection.MarkupEntity.uniqueIdentifier = {
+                root: "3599479.55.229869.2420.95923465.1.969.993890555.1343973142.60243"
+            }
+            ImageAnnotation.markupEntityCollection.MarkupEntity.imageReferenceUid = {
+                root: "1.2.826.0.1.3680043.8.420.11681470831783009309623022900689302201"
+            };
+            ImageAnnotation.markupEntityCollection.MarkupEntity.referencedFrameNumber = {
+                value: 1
+            };
+            // line coordinates
+            ImageAnnotation.markupEntityCollection.MarkupEntity.twoDimensionSpatialCoordinateCollection = {
+                TwoDimensionSpatialCoordinate: [
+                    {
+                        y: {
+                            value: 183.3186119873817
+                        },
+                        coordinateIndex: {
+                            value: 0
+                        },
+                        x: {
+                            value: 215.62145110410094
+                        }
+                    },
+                    {
+                        y: {
+                            value: 183.3186119873817
+                        },
+                        coordinateIndex: {
+                            value: 1
+                        },
+                        x: {
+                            value: 310.10725552050474
+                        }
+                    }
+                ]
+            };
+
+            // Image references to the DICOM
+            ImageAnnotation.imageReferenceEntityCollection = {ImageReferenceEntity: {}};
+            ImageAnnotation.imageReferenceEntityCollection.ImageReferenceEntity.uniqueIdentifier = {
+                root: "20.6225.613003233.9314863573.93790.543849.69652549.2572056.170.2"
+            };
+            ImageAnnotation.imageReferenceEntityCollection.ImageReferenceEntity["xsi:type"] = "DicomImageReferenceEntity";
+            ImageAnnotation.imageReferenceEntityCollection.ImageReferenceEntity.imageStudy = {
+                startTime: {
+                    value: "10:41:40"
+                },
+                startDate: {
+                    value: 20121114
+                },
+                instanceUid: {
+                    root: "1.2.826.0.1.3680043.8.420.21671066634518938241986536968169464801"
+                }
+            };
+
+            var imageSeries = {
+                modality: {
+                    codeSystemVersion: 20121129,
+                    codeSystemName: "DCM",
+                    code: "CT",
+                    "iso:displayName": {
+                        value: "Computed Radiography",
+                        "xmlns:iso": "uri:iso.org:21090"
+                    }
+                },
+                instanceUid: {
+                    root: "1.2.826.0.1.3680043.8.420.21373847105860004543800415204951808690"
+                }
+            };
+
+            var Image = {
+                sopInstanceUid: {
+                    root: "1.2.826.0.1.3680043.8.420.11681470831783009309623022900689302201"
+                },
+                sopClassUid: {
+                    root: "1.2.840.10008.5.1.4.1.1.2"
+                }
+            };
+            imageSeries.imageCollection = {Image: Image};
+            ImageAnnotation.imageReferenceEntityCollection.ImageReferenceEntity.imageStudy.imageSeries = imageSeries;
+            aim.ImageAnnotationCollection.imageAnnotations.ImageAnnotation = ImageAnnotation;
+
+
+
+
+
+            //aim.setImageAnnotationCollection({});
+            //var userObject = {name: username};
+            //var user = new User();
+            //aim.setUser(user);
+            console.log(aim);
+        }
+    </script>
+  </body>
+</html>
